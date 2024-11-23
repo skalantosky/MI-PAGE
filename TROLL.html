@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Peso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        input,
+        button {
+            margin: 10px;
+            padding: 10px;
+        }
+
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #overlay img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Calculadora de Peso</h1>
+    <p>Ingresa tu peso:</p>
+    <input type="number" id="peso" placeholder="Introduce tu peso" required>
+    <button onclick="calcularPeso()">Calcular</button>
+
+    <div id="resultado"></div>
+    <div id="overlay" onclick="cerrarImagen()">
+        <img id="imagen" src="SORCES/gordas.jpg" alt="¡Peso Excesivo!">
+    </div>
+    <audio id="audio" src="AUDIOS/y2mate.com - oye gelda  sonido saturado _360P.mp4"></audio>
+
+    <script>
+        function calcularPeso() {
+            const peso = parseFloat(document.getElementById("peso").value);
+            const resultado = document.getElementById("resultado");
+            const overlay = document.getElementById("overlay");
+            const audio = document.getElementById("audio");
+
+            if (isNaN(peso)) {
+                resultado.textContent = "Por favor, ingresa un valor válido.";
+                overlay.style.display = "none";
+                return;
+            }
+
+            if (peso > 50) {
+                resultado.textContent = "";
+                overlay.style.display = "flex";
+                audio.play();
+            } else {
+                resultado.textContent = "El peso ingresado está dentro del límite.";
+                overlay.style.display = "none";
+                audio.pause();
+                audio.currentTime = 0; // Reinicia el audio
+            }
+        }
+
+        function cerrarImagen() {
+            const overlay = document.getElementById("overlay");
+            const audio = document.getElementById("audio");
+
+            overlay.style.display = "none";
+            audio.pause();
+            audio.currentTime = 0; // Reinicia el audio
+        }
+    </script>
+</body>
+
+</html>
